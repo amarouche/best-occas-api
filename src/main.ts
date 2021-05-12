@@ -8,6 +8,6 @@ async function bootstrap() {
   const opt = new DocumentBuilder().setTitle('api').setDescription('descri').addTag('1.0').build()
   const doc = SwaggerModule.createDocument(app, opt)
   SwaggerModule.setup('docs',app, doc)
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
