@@ -1,0 +1,11 @@
+{
+    "production": {
+        "username": "tomkadwill",
+        "password": "password",
+        "database": "urlshortener_production",
+        "host": "localhost",
+        "dialect": "postgres",
+        "operatorsAliases": false,
+        "use_env_variable": "DATABASE_URL"
+    }
+}
