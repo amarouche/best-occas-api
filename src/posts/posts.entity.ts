@@ -19,15 +19,14 @@ export class Posts {
   description:string
 
   @Column("text", { array: true })
-  @IsNotEmpty()
   imgs: string[];
   
   @ManyToOne(() => Category, category => category.posts)
-  @IsNumber()
+  // @IsNumber()
   category: Category;
 
   @ManyToOne(() => User, user => user.posts, {nullable:true})
-  @IsNumber()
+  // @IsNumber()
   user: User;
   
   @CreateDateColumn()

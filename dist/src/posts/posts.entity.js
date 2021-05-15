@@ -34,17 +34,14 @@ __decorate([
 ], Posts.prototype, "description", void 0);
 __decorate([
     typeorm_1.Column("text", { array: true }),
-    class_validator_1.IsNotEmpty(),
     __metadata("design:type", Array)
 ], Posts.prototype, "imgs", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => category_entity_1.Category, category => category.posts),
-    class_validator_1.IsNumber(),
     __metadata("design:type", category_entity_1.Category)
 ], Posts.prototype, "category", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => user_entity_1.User, user => user.posts, { nullable: true }),
-    class_validator_1.IsNumber(),
     __metadata("design:type", user_entity_1.User)
 ], Posts.prototype, "user", void 0);
 __decorate([

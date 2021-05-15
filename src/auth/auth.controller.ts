@@ -20,7 +20,7 @@ export class AuthController {
   }  
 
   @UseGuards(AuthGuard())
-  @Get('register')
+  @Get('me')
   async test(@Req() req){
     console.log(req)
   }  

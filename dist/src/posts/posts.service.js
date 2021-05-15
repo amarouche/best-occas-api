@@ -18,10 +18,51 @@ const typeorm_1 = require("@nestjs/typeorm");
 const crud_typeorm_1 = require("@nestjsx/crud-typeorm");
 const typeorm_2 = require("typeorm");
 const posts_entity_1 = require("./posts.entity");
+const imgbbUploader = require("imgbb-uploader");
+const fs = require("fs");
 let PostsService = class PostsService extends crud_typeorm_1.TypeOrmCrudService {
     constructor(postsRepository) {
         super(postsRepository);
         this.postsRepository = postsRepository;
+    }
+    async createPost(post, images) {
+        let postSave = new posts_entity_1.Posts();
+        try {
+            if (images != undefined) {
+                for (let i = 0; i < images.length; i++) {
+                    post.imgs.push(await this.uploadImg(images[i]));
+                }
+            }
+            console.log(post.imgs);
+            postSave = await this.postsRepository.save(post);
+        }
+        catch (ex) {
+            console.log(ex);
+            if (ex.code === '23505') {
+                throw new common_1.ConflictException('Category already exists.');
+            }
+            else {
+                throw new common_1.InternalServerErrorException();
+            }
+        }
+        return postSave;
+    }
+    async uploadImg(image) {
+        let res = null;
+        try {
+            res = await imgbbUploader("832911a9383ae5756287096b4e25cb5c", "./files/" + image.filename);
+            try {
+                fs.unlinkSync("./files/" + image.filename);
+            }
+            catch (err) {
+                console.error(err);
+            }
+        }
+        catch (error) {
+            console.log('sss', error);
+            throw new common_1.InternalServerErrorException();
+        }
+        return res.url;
     }
 };
 PostsService = __decorate([

@@ -49,7 +49,7 @@ __decorate([
 ], AuthController.prototype, "register", null);
 __decorate([
     common_1.UseGuards(passport_1.AuthGuard()),
-    common_1.Get('register'),
+    common_1.Get('me'),
     __param(0, common_1.Req()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

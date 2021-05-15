@@ -17,9 +17,12 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const category_entity_1 = require("./category.entity");
+const imgbbUploader = require("imgbb-uploader");
+const fs = require("fs");
 let CategoryService = class CategoryService {
-    constructor(categoriesRepository) {
+    constructor(categoriesRepository, http) {
         this.categoriesRepository = categoriesRepository;
+        this.http = http;
     }
     async getAllCategories() {
         return this.categoriesRepository.find().then(data => {
@@ -31,9 +34,10 @@ let CategoryService = class CategoryService {
     async getOneCategory(id) {
         return await this.categoriesRepository.findOne(id);
     }
-    async createCategory(category) {
+    async createCategory(category, image) {
         let categorySave = new category_entity_1.Category();
         try {
+            category.img = await this.uploadImg(image);
             categorySave = await this.categoriesRepository.save(category);
         }
         catch (ex) {
@@ -49,11 +53,28 @@ let CategoryService = class CategoryService {
     async updateCategory(id, category) {
         return await this.categoriesRepository.save(Object.assign(Object.assign({}, category), { id: Number(id) }));
     }
+    async uploadImg(image) {
+        let res = null;
+        try {
+            res = await imgbbUploader("832911a9383ae5756287096b4e25cb5c", "./files/" + image.filename);
+            try {
+                fs.unlinkSync("./files/" + image.filename);
+            }
+            catch (err) {
+                console.error(err);
+            }
+        }
+        catch (error) {
+            console.log(error);
+            throw new common_1.InternalServerErrorException();
+        }
+        return res.url;
+    }
 };
 CategoryService = __decorate([
     common_1.Injectable(),
     __param(0, typeorm_1.InjectRepository(category_entity_1.Category)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository, common_1.HttpService])
 ], CategoryService);
 exports.CategoryService = CategoryService;
 //# sourceMappingURL=category.service.js.map

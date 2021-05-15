@@ -10,9 +10,14 @@ import { CategoryModule } from './category/category.module';
 import { PostsModule } from './posts/posts.module';
 import { FavoriteController } from './favorite/favorite.controller';
 import { FavoriteModule } from './favorite/favorite.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig), UserModule, AuthModule, CategoryModule, PostsModule, FavoriteModule],
+  imports: [TypeOrmModule.forRoot(typeOrmConfig), 
+    MulterModule.register({
+    dest: './uploads',
+  }), 
+  UserModule, AuthModule, CategoryModule, PostsModule, FavoriteModule],
   controllers: [AppController],
   providers: [AppService],
 })

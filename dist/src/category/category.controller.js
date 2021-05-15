@@ -15,6 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryController = void 0;
 const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
+const platform_express_1 = require("@nestjs/platform-express");
+const multer_1 = require("multer");
+const multer_filter_1 = require("../middleware/multer.filter");
 const category_entity_1 = require("./category.entity");
 const category_service_1 = require("./category.service");
 let CategoryController = class CategoryController {
@@ -27,8 +30,8 @@ let CategoryController = class CategoryController {
     async getOne(id) {
         return await this.service.getOneCategory(id);
     }
-    async createOne(categoryBody) {
-        return await this.service.createCategory(categoryBody);
+    async createOne(categoryBody, file) {
+        return await this.service.createCategory(categoryBody, file);
     }
     async updateOne(id, categoryBody) {
         return await this.service.updateCategory(id, categoryBody);
@@ -48,11 +51,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CategoryController.prototype, "getOne", null);
 __decorate([
-    common_1.UsePipes(common_1.ValidationPipe),
     common_1.Post(),
-    __param(0, common_1.Body()),
+    common_1.UseInterceptors(platform_express_1.FileInterceptor('img', {
+        storage: multer_1.diskStorage(multer_filter_1.multerStorage),
+        fileFilter: multer_filter_1.imageFileFilter
+    })),
+    __param(0, common_1.Body()), __param(1, common_1.UploadedFile()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [category_entity_1.Category]),
+    __metadata("design:paramtypes", [category_entity_1.Category, Object]),
     __metadata("design:returntype", Promise)
 ], CategoryController.prototype, "createOne", null);
 __decorate([
