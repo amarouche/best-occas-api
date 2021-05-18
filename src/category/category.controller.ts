@@ -5,7 +5,9 @@ import { diskStorage } from 'multer';
 import { imageFileFilter, multerStorage } from 'src/middleware/multer.filter';
 import { Category } from './category.entity';
 import { CategoryService } from './category.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('categories')
 @UseGuards(AuthGuard('jwt'))
 @Controller('categories')
 export class CategoryController {

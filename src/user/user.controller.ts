@@ -2,8 +2,9 @@ import {Controller, UsePipes, ValidationPipe} from '@nestjs/common';
 import {UserService} from './user.service';
 import {User} from './user.entity';
 import {Crud} from '@nestjsx/crud';
-// import {ApiUseTags} from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags("User")
 @UsePipes(ValidationPipe)
 @Crud({
   model: {

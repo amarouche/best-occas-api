@@ -5,7 +5,9 @@ import { diskStorage } from 'multer';
 import { imageFileFilter, multerStorage } from 'src/middleware/multer.filter';
 import { Posts } from './posts.entity';
 import { PostsService } from './posts.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Posts')
 @UsePipes(ValidationPipe)
 @Crud({
   model: {

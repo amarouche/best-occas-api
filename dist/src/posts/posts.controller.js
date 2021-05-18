@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostsController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
 const crud_1 = require("@nestjsx/crud");
@@ -20,6 +21,7 @@ const multer_1 = require("multer");
 const multer_filter_1 = require("../middleware/multer.filter");
 const posts_entity_1 = require("./posts.entity");
 const posts_service_1 = require("./posts.service");
+const swagger_1 = require("@nestjs/swagger");
 let PostsController = class PostsController {
     constructor(service) {
         this.service = service;
@@ -34,12 +36,14 @@ __decorate([
         storage: multer_1.diskStorage(multer_filter_1.multerStorage),
         fileFilter: multer_filter_1.imageFileFilter
     })),
+    openapi.ApiResponse({ status: 201, type: require("./posts.entity").Posts }),
     __param(0, common_1.Body()), __param(1, common_1.UploadedFiles()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [posts_entity_1.Posts, Array]),
     __metadata("design:returntype", Promise)
 ], PostsController.prototype, "createOne", null);
 PostsController = __decorate([
+    swagger_1.ApiTags('Posts'),
     common_1.UsePipes(common_1.ValidationPipe),
     crud_1.Crud({
         model: {

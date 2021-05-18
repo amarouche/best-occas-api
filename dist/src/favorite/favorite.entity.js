@@ -10,10 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Favorite = void 0;
+const openapi = require("@nestjs/swagger");
 const posts_entity_1 = require("../posts/posts.entity");
 const user_entity_1 = require("../user/user.entity");
 const typeorm_1 = require("typeorm");
 let Favorite = class Favorite {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { id: { required: true, type: () => Number }, user: { required: true, type: () => require("../user/user.entity").User }, post: { required: true, type: () => require("../posts/posts.entity").Posts }, created_date: { required: true, type: () => Date }, updated_date: { required: true, type: () => Date } };
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),

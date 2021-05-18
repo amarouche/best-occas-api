@@ -10,10 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const posts_entity_1 = require("../posts/posts.entity");
 const typeorm_1 = require("typeorm");
 let User = class User {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { id: { required: true, type: () => Number }, email: { required: true, type: () => String }, password: { required: true, type: () => String }, firstName: { required: true, type: () => String }, lastName: { required: true, type: () => String }, phone: { required: true, type: () => String }, isActive: { required: true, type: () => Boolean }, posts: { required: true, type: () => [require("../posts/posts.entity").Posts] }, created_date: { required: true, type: () => Date }, updated_date: { required: true, type: () => Date } };
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
@@ -43,6 +47,11 @@ __decorate([
     class_validator_1.IsString(),
     __metadata("design:type", String)
 ], User.prototype, "lastName", void 0);
+__decorate([
+    typeorm_1.Column({ length: 100, nullable: false }),
+    class_validator_1.Length(1, 100),
+    __metadata("design:type", String)
+], User.prototype, "phone", void 0);
 __decorate([
     typeorm_1.Column({ default: true }),
     class_validator_1.IsBoolean(),

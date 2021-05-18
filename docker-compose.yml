@@ -17,7 +17,7 @@ services:
       ports:
         - 5432:5432
       environment:
-        POSTGRES_DB: bouyg
+        POSTGRES_DB: bestoccas
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: test
       volumes:

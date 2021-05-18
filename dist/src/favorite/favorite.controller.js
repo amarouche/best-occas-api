@@ -10,16 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FavoriteController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const crud_1 = require("@nestjsx/crud");
 const favorite_entity_1 = require("./favorite.entity");
 const favorite_service_1 = require("./favorite.service");
+const swagger_1 = require("@nestjs/swagger");
 let FavoriteController = class FavoriteController {
     constructor(favoriteService) {
         this.favoriteService = favoriteService;
     }
 };
 FavoriteController = __decorate([
+    swagger_1.ApiTags('Favorite'),
     crud_1.Crud({
         model: {
             type: favorite_entity_1.Favorite

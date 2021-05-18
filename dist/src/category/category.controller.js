@@ -20,6 +20,7 @@ const multer_1 = require("multer");
 const multer_filter_1 = require("../middleware/multer.filter");
 const category_entity_1 = require("./category.entity");
 const category_service_1 = require("./category.service");
+const swagger_1 = require("@nestjs/swagger");
 let CategoryController = class CategoryController {
     constructor(service) {
         this.service = service;
@@ -70,6 +71,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CategoryController.prototype, "updateOne", null);
 CategoryController = __decorate([
+    swagger_1.ApiTags('categories'),
     common_1.UseGuards(passport_1.AuthGuard('jwt')),
     common_1.Controller('categories'),
     __metadata("design:paramtypes", [category_service_1.CategoryService])

@@ -10,10 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Category = void 0;
+const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const posts_entity_1 = require("../posts/posts.entity");
 const typeorm_1 = require("typeorm");
+const swagger_1 = require("@nestjs/swagger");
 let Category = class Category {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { id: { required: true, type: () => Number }, name: { required: true, type: () => String }, img: { required: true, type: () => String }, posts: { required: true, type: () => [require("../posts/posts.entity").Posts] }, created_date: { required: true, type: () => Date }, updated_date: { required: true, type: () => Date } };
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
@@ -29,6 +34,7 @@ __decorate([
     __metadata("design:type", String)
 ], Category.prototype, "img", void 0);
 __decorate([
+    swagger_1.ApiProperty({ type: () => posts_entity_1.Posts }),
     typeorm_1.OneToMany(() => posts_entity_1.Posts, post => post.category),
     __metadata("design:type", Array)
 ], Category.prototype, "posts", void 0);

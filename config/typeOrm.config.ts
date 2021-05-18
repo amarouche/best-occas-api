@@ -10,3 +10,5 @@ export const typeOrmConfig : TypeOrmModuleOptions = {
   entities: ["dist/**/*.entity{.ts,.js}"],
   synchronize: true
 }
+
+// synchronize: true => dev 

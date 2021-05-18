@@ -10,16 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const user_entity_1 = require("./user.entity");
 const crud_1 = require("@nestjsx/crud");
+const swagger_1 = require("@nestjs/swagger");
 let UserController = class UserController {
     constructor(service) {
         this.service = service;
     }
 };
 UserController = __decorate([
+    swagger_1.ApiTags("User"),
     common_1.UsePipes(common_1.ValidationPipe),
     crud_1.Crud({
         model: {

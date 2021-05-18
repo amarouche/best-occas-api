@@ -2,7 +2,9 @@ import { Body, Controller, Get, Post, Req, UseGuards, UsePipes, ValidationPipe }
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/user/user.entity';
 import { AuthService } from './auth.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
 

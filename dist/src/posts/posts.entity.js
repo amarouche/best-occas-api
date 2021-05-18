@@ -10,11 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Posts = void 0;
+const openapi = require("@nestjs/swagger");
 const category_entity_1 = require("../category/category.entity");
 const user_entity_1 = require("./../user/user.entity");
 const typeorm_1 = require("typeorm");
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 let Posts = class Posts {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { id: { required: true, type: () => Number }, title: { required: true, type: () => String }, description: { required: true, type: () => String }, imgs: { required: true, type: () => [String] }, category: { required: true, type: () => require("../category/category.entity").Category }, user: { required: true, type: () => require("../user/user.entity").User }, created_date: { required: true, type: () => Date }, updated_date: { required: true, type: () => Date } };
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
@@ -37,10 +42,12 @@ __decorate([
     __metadata("design:type", Array)
 ], Posts.prototype, "imgs", void 0);
 __decorate([
+    swagger_1.ApiProperty({ type: () => category_entity_1.Category }),
     typeorm_1.ManyToOne(() => category_entity_1.Category, category => category.posts),
     __metadata("design:type", category_entity_1.Category)
 ], Posts.prototype, "category", void 0);
 __decorate([
+    swagger_1.ApiProperty({ type: () => user_entity_1.User }),
     typeorm_1.ManyToOne(() => user_entity_1.User, user => user.posts, { nullable: true }),
     __metadata("design:type", user_entity_1.User)
 ], Posts.prototype, "user", void 0);

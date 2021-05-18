@@ -13,10 +13,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const passport_1 = require("@nestjs/passport");
 const user_entity_1 = require("../user/user.entity");
 const auth_service_1 = require("./auth.service");
+const swagger_1 = require("@nestjs/swagger");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -34,6 +36,7 @@ let AuthController = class AuthController {
 };
 __decorate([
     common_1.Post('login'),
+    openapi.ApiResponse({ status: 201, type: Object }),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.User]),
@@ -42,6 +45,7 @@ __decorate([
 __decorate([
     common_1.UsePipes(common_1.ValidationPipe),
     common_1.Post('register'),
+    openapi.ApiResponse({ status: 201, type: Object }),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.User]),
@@ -50,12 +54,14 @@ __decorate([
 __decorate([
     common_1.UseGuards(passport_1.AuthGuard()),
     common_1.Get('me'),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, common_1.Req()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "test", null);
 AuthController = __decorate([
+    swagger_1.ApiTags('auth'),
     common_1.Controller('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);
