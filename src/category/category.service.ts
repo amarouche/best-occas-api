@@ -24,6 +24,7 @@ export class CategoryService {
   }
 
   async createCategory(category: Category, image): Promise<Category> {
+    console.log(category)
     let categorySave  = new Category()
     try {
       category.img = await this.uploadImg(image)
@@ -45,7 +46,7 @@ export class CategoryService {
   async uploadImg(image){
     let res = null
     try {
-      res = await imgbbUploader("832911a9383ae5756287096b4e25cb5c", "./files/"+ image.filename)  
+      res = await imgbbUploader(process.env.IMGBDDTOKEN, "./files/"+ image.filename)  
       try {
         fs.unlinkSync("./files/"+ image.filename)
       } catch(err) {

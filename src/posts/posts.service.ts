@@ -41,7 +41,7 @@ export class PostsService extends TypeOrmCrudService<Posts>{
    async uploadImg(image){
     let res = null
     try {
-      res = await imgbbUploader("832911a9383ae5756287096b4e25cb5c", "./files/"+ image.filename)
+      res = await imgbbUploader(process.env.IMGBDDTOKEN, "./files/"+ image.filename)
       try {
         fs.unlinkSync("./files/"+ image.filename)
       } catch(err) {
