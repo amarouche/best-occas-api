@@ -8,7 +8,7 @@ import { CategoryService } from './category.service';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('categories')
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(AuthGuard('jwt'))
 @Controller('categories')
 export class CategoryController {
   constructor(readonly service : CategoryService){
@@ -19,7 +19,8 @@ export class CategoryController {
   }
 
   @Get(':id')
-  async getOne(@Param('id') id : number): Promise<Category> {
+  async getOne(@Param('id') id : number){
+    return {id: id}
     return await this.service.getOneCategory(id)
   }
   // @UsePipes(ValidationPipe)

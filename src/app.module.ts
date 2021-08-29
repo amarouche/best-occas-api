@@ -12,7 +12,7 @@ import { FavoriteModule } from './favorite/favorite.module';
 import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig), 
+    imports: [TypeOrmModule.forRoot(typeOrmConfig), 
     UserModule, AuthModule, CategoryModule, PostsModule, FavoriteModule],
   controllers: [AppController],
   providers: [AppService],
