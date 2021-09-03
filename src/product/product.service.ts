@@ -2,31 +2,28 @@ import { ConflictException, Injectable, InternalServerErrorException } from '@ne
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Repository } from 'typeorm';
-import { Posts } from './posts.entity';
+import { Product } from './product.entity';
 import * as imgbbUploader  from "imgbb-uploader"
 import * as fs from "fs"
 import { util } from 'prettier';
 
 @Injectable()
-export class PostsService extends TypeOrmCrudService<Posts>{
-  constructor(@InjectRepository(Posts) private postsRepository: Repository<Posts>){
-    super(postsRepository)
+export class ProductService extends TypeOrmCrudService<Product>{
+  constructor(@InjectRepository(Product) private productRepository: Repository<Product>){
+    super(productRepository)
   }
-  async createPost(post: Posts, images): Promise<Posts> {
-    let postSave  = new Posts()
+  async createProduct(product: Product, images): Promise<Product> {
+    console.log(product,'ds')
+    let productSave  = new Product()
     try {
+      product.imgs = []
       if(images != undefined){
         for (let i = 0; i < images.length; i++) {
-          post.imgs.push(await this.uploadImg( images[i]))
+          product.imgs.push(await this.uploadImg(images[i]))
         }
       }
-      
-      // images.forEach(async image => {
-      //   // console.log(await this.uploadImg(image))
-      //    post.imgs.push( (await this.uploadImg(image)))
-      // });
-      console.log(post.imgs)
-      postSave = await this.postsRepository.save(post)
+      // console.log(post.imgs)
+      productSave = await this.productRepository.save(product)
    } catch (ex) {
      console.log(ex)
      if (ex.code === '23505') {
@@ -35,7 +32,7 @@ export class PostsService extends TypeOrmCrudService<Posts>{
        throw new InternalServerErrorException();
      }
    }
-    return postSave
+    return productSave
   }
 
    async uploadImg(image){
@@ -48,7 +45,6 @@ export class PostsService extends TypeOrmCrudService<Posts>{
         console.error(err)
       }
     } catch (error) {
-      console.log('sss',error)
       throw new InternalServerErrorException();
     }
     return res.url

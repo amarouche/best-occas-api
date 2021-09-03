@@ -1,11 +1,12 @@
 import { Category } from "src/category/category.entity";
-import { User } from "./../user/user.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { User } from "../user/user.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { IsNumber, IsNotEmpty, IsNumberString, IsString, Length } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
+import { Favorite } from "src/favorite/favorite.entity";
 
 @Entity()
-export class Posts {
+export class Product {
   @PrimaryGeneratedColumn()
   id:number
 
@@ -23,12 +24,15 @@ export class Posts {
   imgs: string[];
   
   @ApiProperty({ type: () => Category })
-  @ManyToOne(() => Category, category => category.posts)
+  @ManyToOne(() => Category, category => category.product)
   category: Category;
   
   @ApiProperty({ type: () => User })
-  @ManyToOne(() => User, user => user.posts, {nullable:true})
+  @ManyToOne(() => User, user => user.product, {nullable:true})
   user: User;
+  
+  @OneToMany(() => Favorite, favorites => favorites.product)
+  favorites: Favorite[];
   
   @CreateDateColumn()
   created_date: Date;

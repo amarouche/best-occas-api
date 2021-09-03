@@ -9,7 +9,8 @@ import * as fs from "fs"
 @Injectable() 
 export class CategoryService {
   
-  constructor(@InjectRepository(Category) private categoriesRepository: Repository<Category>,private http: HttpService){
+  constructor(@InjectRepository(Category) private categoriesRepository: Repository<Category>,
+  private http: HttpService){
   }
   async getAllCategories(): Promise<Category[]> {
     return this.categoriesRepository.find().then(data => {
@@ -24,11 +25,13 @@ export class CategoryService {
   }
 
   async createCategory(category: Category, image): Promise<Category> {
-    console.log(category)
     let categorySave  = new Category()
+    // console.log(categorySave,"ssss")
+
     try {
       category.img = await this.uploadImg(image)
       categorySave = await this.categoriesRepository.save(category)
+      console.log(categorySave)
    } catch (ex) {
      if (ex.code === '23505') {
        throw new ConflictException('Category already exists.');
@@ -44,6 +47,7 @@ export class CategoryService {
   }
 
   async uploadImg(image){
+    console.log(image)
     let res = null
     try {
       res = await imgbbUploader(process.env.IMGBDDTOKEN, "./files/"+ image.filename)  

@@ -1,16 +1,27 @@
 import { Controller } from '@nestjs/common';
 import { Crud } from '@nestjsx/crud';
+import { Exclude } from 'class-transformer';
 import { Favorite } from './favorite.entity';
 import { FavoriteService } from './favorite.service';
-import {ApiTags} from '@nestjs/swagger';
 
-@ApiTags('Favorite')
 @Crud({
-  model: {
-    type: Favorite
+  model:{
+    type:Favorite
+  },
+  query:{
+    join:{
+      user:{
+        eager:true,
+        exclude:['password']
+      },
+      product:{
+        eager:true
+      }
+    }
   }
 })
+
 @Controller('favorite')
 export class FavoriteController {
-  constructor(private favoriteService: FavoriteService){}
+  constructor(public service : FavoriteService){}
 }

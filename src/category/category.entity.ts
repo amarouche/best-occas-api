@@ -1,5 +1,5 @@
 import { IsString } from "class-validator";
-import { Posts } from "src/posts/posts.entity";
+import { Product } from "src/product/product.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -17,9 +17,9 @@ export class Category
   @Column({length:100,nullable:true})
   img: string;
 
-  @ApiProperty({ type: () => Posts })
-  @OneToMany(() => Posts, post => post.category)
-  posts: Posts[];
+  @ApiProperty({ type: () => Product })
+  @OneToMany(() => Product, product => product.category)
+  product: Product[];
 
   @CreateDateColumn()
   created_date: Date;

@@ -3,15 +3,15 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { Crud } from '@nestjsx/crud';
 import { diskStorage } from 'multer';
 import { imageFileFilter, multerStorage } from 'src/middleware/multer.filter';
-import { Posts } from './posts.entity';
-import { PostsService } from './posts.service';
+import { Product } from './product.entity';
+import { ProductService } from './product.service';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Posts')
+@ApiTags('Product')
 @UsePipes(ValidationPipe)
 @Crud({
   model: {
-    type: Posts,
+    type: Product,
   },
   query: {
     join: {
@@ -25,16 +25,16 @@ import { ApiTags } from '@nestjs/swagger';
     },
   },
 })
-@Controller('posts')
-export class PostsController {
-  constructor(public service: PostsService) {
+@Controller('product')
+export class ProductController {
+  constructor(public service: ProductService) {
   }
 
   @Post()
   @UseInterceptors(FilesInterceptor('imgs', 20 ,{
     storage: diskStorage(multerStorage),
     fileFilter:imageFileFilter}))
-  async createOne(@Body() postBody : Posts, @UploadedFiles() files: Array<Express.Multer.File>): Promise<Posts> {
-    return await this.service.createPost(postBody, files)
+  async createOne(@Body() productBody : Product, @UploadedFiles() files: Array<Express.Multer.File>): Promise<Product> {
+    return await this.service.createProduct(productBody, files)
   }
 }

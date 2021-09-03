@@ -7,16 +7,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { AuthModule } from './auth/auth.module';
 import { CategoryModule } from './category/category.module';
-import { PostsModule } from './posts/posts.module';
+import { ProductModule } from './product/product.module';
 import { FavoriteModule } from './favorite/favorite.module';
 import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
     imports: [TypeOrmModule.forRoot(typeOrmConfig), 
-    UserModule, AuthModule, CategoryModule, PostsModule, FavoriteModule],
+    UserModule, AuthModule, CategoryModule, ProductModule, FavoriteModule],
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule {
   constructor(private connection: Connection) {}
 }

@@ -20,7 +20,7 @@ export class CategoryController {
 
   @Get(':id')
   async getOne(@Param('id') id : number){
-    return {id: id}
+    // return {id: id}
     return await this.service.getOneCategory(id)
   }
   // @UsePipes(ValidationPipe)
@@ -31,19 +31,20 @@ export class CategoryController {
   async createOne(@Body() categoryBody : Category,  @UploadedFile() file: Express.Multer.File): Promise<Category> {
     return await this.service.createCategory(categoryBody, file)
   }
+
   @UsePipes(ValidationPipe)
   @Put(':id')
   async updateOne(@Param('id') id: number, @Body() categoryBody : Category): Promise<Category> {
     return await this.service.updateCategory(id, categoryBody)
   }
-  // @Post("upload")
-  // @UseInterceptors(FileInterceptor('img', {
-  //   storage: diskStorage(multerStorage),
-  //   fileFilter:imageFileFilter}))
-  //   uploadSingleFileWithPost(@UploadedFile() file: Express.Multer.File, @Body() body) {
-  //   console.log(file);
-  //   console.log(body.firstName);
-  //   return file
-  // }
 
+  @Post("upload")
+  @UseInterceptors(FileInterceptor('img', {
+    storage: diskStorage(multerStorage),
+    fileFilter:imageFileFilter}))
+    uploadSingleFileWithProduct(@UploadedFile() file: Express.Multer.File, @Body() body) {
+    console.log(file);
+    console.log(body.firstName);
+    return file
+  }
 }

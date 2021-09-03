@@ -1,21 +1,20 @@
-import { Post } from "@nestjs/common";
-import { Posts } from "src/posts/posts.entity";
+import { Product } from "src/product/product.entity";
 import { User } from "src/user/user.entity";
-import { CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { ApiProperty } from '@nestjs/swagger';
+import { CreateDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger'
 
 @Entity()
 export class Favorite {
   @PrimaryGeneratedColumn()
   id: number
 
-  // @ApiProperty({type:() => User})
-  @OneToOne(() => User, user => user.id)
-  user:User
-
-  // @ApiProperty({type:() => Posts})
-  @OneToOne(() => Posts, post => post.id)
-  post:Posts
+  // @ApiProperty({ type: () => Product })
+  @ManyToOne(() => Product, product => product.favorites, {nullable:true})
+  product: Product;
+  
+  // @ApiProperty({ type: () => User })
+  @ManyToOne(() => User, user => user.favorites, {nullable:true})
+  user: User;
 
   @CreateDateColumn()
   created_date: Date;

@@ -1,7 +1,8 @@
 import { IsBoolean, IsNumber, IsString, Length } from 'class-validator';
-import { Posts } from '../posts/posts.entity';
+import { Product } from '../product/product.entity';
 import { Entity, Column, PrimaryGeneratedColumn, Unique, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Favorite } from 'src/favorite/favorite.entity';
 
 @Entity()
 @Unique(["email"])
@@ -37,9 +38,12 @@ export class User {
   @IsBoolean()
   isActive: boolean;
 
-  // @ApiProperty({ type: () => Posts })
-  @OneToMany(() => Posts, posts => posts.user)
-  posts: Posts[];
+  // @ApiProperty({ type: () => Product })
+  @OneToMany(() => Product, product => product.user)
+  product: Product[];
+
+  @OneToMany(() => Favorite, favorites => favorites.user)
+  favorites: Favorite[];
 
   @CreateDateColumn()
   created_date: Date;
