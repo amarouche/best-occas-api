@@ -29,7 +29,6 @@ import { ApiTags } from '@nestjs/swagger';
 export class ProductController {
   constructor(public service: ProductService) {
   }
-
   @Post()
   @UseInterceptors(FilesInterceptor('imgs', 20 ,{
     storage: diskStorage(multerStorage),

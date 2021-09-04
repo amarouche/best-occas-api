@@ -9,7 +9,7 @@ import { CategoryService } from './category.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Category]), MulterModule.register({
     dest: './uploads',
-  }), AuthModule,HttpModule
+  }), AuthModule
 ],
   providers: [CategoryService],
   controllers: [CategoryController]

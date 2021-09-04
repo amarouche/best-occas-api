@@ -33,7 +33,7 @@ export class Product {
   
   @OneToMany(() => Favorite, favorites => favorites.product)
   favorites: Favorite[];
-  
+ 
   @CreateDateColumn()
   created_date: Date;
 
