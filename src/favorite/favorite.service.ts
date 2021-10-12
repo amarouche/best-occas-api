@@ -6,7 +6,6 @@ import { Favorite } from './favorite.entity';
 
 @Injectable()
 export class FavoriteService extends TypeOrmCrudService<Favorite> {
-  
   constructor(@InjectRepository(Favorite)private favoriteRepository: Repository<Favorite>){
     super(favoriteRepository)
   }

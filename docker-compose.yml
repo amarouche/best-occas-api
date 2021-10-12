@@ -2,12 +2,17 @@ version: '3'
 
 services:
   # bts_api:
-  #   build: .
+  #   build:
+  #     context: .
+  #     target: development
+  #   # volumes:
+  #   #   - .:/usr/src/app
+  #   #   - /usr/src/app/node_modules
+  #   # # command: npm run start:dev
+  #   env_file:
+  #     - .env
   #   depends_on:
   #     - postgresql
-  #   environment:
-  #     PORT: 3000
-  #     ACTIVE_BACKUP: "true"
   #   ports:
   #     - "3000:3000"
   postgresql:

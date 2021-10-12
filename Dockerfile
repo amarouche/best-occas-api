@@ -1,21 +1,31 @@
-FROM node:12
-# RUN mkdir -p /usr/src/app
-# WORKDIR /usr/src/app
-# COPY package.json /usr/src/app/
-# # RUN npm install --silent
-# # RUN npm install --silent pm2 -g
-# COPY . .
-# RUN rm config/typeOrm.config.ts
-# RUN mv config/typeOrm.docker.config.ts ./config/typeOrm.config.ts
-# RUN npm i
-# RUN npm run build
+FROM node:12.18 As development
 
-# CMD ["node", "dist/main.js"]
+WORKDIR /usr/src/app
 
-WORKDIR /app
-COPY ./package.json ./
-RUN npm install
+COPY package*.json ./
+
+RUN npm install --only=development
+RUN npm uninstall bcrypt
+# install the bcrypt modules for the machine
+RUN npm install bcrypt
 COPY . .
+
 RUN npm run build
-WORKDIR /app
-CMD ["npm", "run", "start:prod"]
+
+# FROM node:12.13-alpine as production
+
+# ARG NODE_ENV=production
+# ENV NODE_ENV=${NODE_ENV}
+
+# WORKDIR /usr/src/app
+
+# COPY package*.json ./
+
+# RUN npm install --only=production
+
+# COPY . .
+
+# COPY --from=development /usr/src/app/dist ./dist
+
+# CMD ["node", "dist/main"]
+CMD ["node", "dist/src/main.js"]
